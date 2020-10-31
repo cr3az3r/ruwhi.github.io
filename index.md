@@ -227,7 +227,7 @@
             <div class="tanya">
             <div id="question"></div>
             <div id="choices">
-                <div class="choice btn-grad" id="A" onclick="" onclick="alert('Aku juga sayaaang banget sama kamu'); + checkAnswer('A')"></div>
+                <div class="choice btn-grad" id="A" onclick="alert(kata); + checkAnswer('A')"></div>
                 <div class="choice btn-grad" id="B" onclick="checkAnswer('B')"></div>
                 <div class="choice btn-grad" id="C" hidden onclick="checkAnswer('C')"></div>
             </div>
@@ -260,26 +260,30 @@ const scoreDiv = document.getElementById("scoreContainer");
 // create our questions
 let questions = [
     {
-        question : "Apakah ini simbol dari HTML5?",
-        imgSrc : "1.jpeg",
-        choiceA : "Benar",
-        choiceB : "Salah",
-        choiceC : "Salah",
+        question : "Kamu sayang gak sama aku?",
+        imgSrc : "1.jpg",
+        choiceA : "Iya Sayang",
+        choiceB : "Tidak",
+        choiceC : "",
+        tanya : "sayang",
+        correct : "A"
+
+    },{
+        question : "Apa kamu selalu cinta sama aku?",
+        imgSrc : "1.jpg",
+        choiceA : "Iya dong",
+        choiceB : "Gak sih",
+        choiceC : "",
+        tanya : "baik",
         correct : "A"
     },{
-        question : "Apakah ini simbol dari CSS3?",
-        imgSrc : "1.jpeg",
-        choiceA : "Salah",
-        choiceB : "Benar",
-        choiceC : "Salah",
-        correct : "B"
-    },{
-        question : "Apakah ini simbol dari JavaScript?",
-        imgSrc : "1.jpeg",
-        choiceA : "Salah",
-        choiceB : "Salah",
-        choiceC : "Benar",
-        correct : "C"
+        question : "Kamu rindu gak sama aku?",
+        imgSrc : "1.jpg",
+        choiceA : "Rindu banget",
+        choiceB : "Gak sama seklai",
+        choiceC : "",
+        tanya : "rindu",
+        correct : "A"
     }
 ];
 
@@ -303,6 +307,14 @@ function renderQuestion(){
     choiceA.innerHTML = q.choiceA;
     choiceB.innerHTML = q.choiceB;
     choiceC.innerHTML = q.choiceC;
+
+    if (q.tanya == "sayang") {
+        kata = "Aku juga sayaaang banget sama kamu :)";
+    } else if (q.tanya == "baik") {
+        kata = "Makasih sayangkuu. Kamu juga baik banget sama aku";
+    } else {
+        kata = "Aku juga rindu banget sama kamu";
+    }
 }
 
 start.addEventListener("click",startQuiz);
@@ -378,11 +390,23 @@ function answerIsCorrect(){
 // answer is Wrong
 function answerIsWrong(){
     document.getElementById(runningQuestion).style.backgroundColor = "#f00";
-    prompt("Tapi kenapa?");
+
+    let q = questions[runningQuestion];
+
+    if (q.tanya == "sayang") {
+        kata = "Tapi kenapa?";
+    } else if (q.tanya == "baik") {
+        kata = "Apa yang gak baik dari aku?";
+    } else {
+        kata = "Kenapa siiih?";
+    }
+
+    prompt(kata);
 }
 
 // score render
 function scoreRender(){
+    document.getElementById("muncul").click();
     scoreDiv.style.display = "block";
     
     // calculate the amount of question percent answered by the user
@@ -398,5 +422,28 @@ function scoreRender(){
     scoreDiv.innerHTML = "<img src="+ img +">";
     scoreDiv.innerHTML += "<p>"+ scorePerCent +"%</p>";
 }
+</script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+
+<!-- Button trigger modal -->
+<button hidden type="button" id="muncul" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <video width="100%" id="vid" autoplay muted loop>
+            <source src="vidio.mp4" type="video/mp4">
+        </video>
+
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    document.getElementById('vid').play();
 </script>
 </html>
